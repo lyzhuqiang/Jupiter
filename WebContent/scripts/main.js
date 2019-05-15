@@ -17,6 +17,7 @@
     document.querySelector('#nearby-btn').addEventListener('click', loadNearbyItems);
     document.querySelector('#fav-btn').addEventListener('click', loadFavoriteItems);
     document.querySelector('#recommend-btn').addEventListener('click', loadRecommendedItems);
+    document.querySelector('#search-btn').addEventListener('click', loadSearchItems);
     validateSession();
     // onSessionValid({"user_id":"1111","name":"John Smith","status":"OK"});
   }
@@ -55,6 +56,7 @@
     var avatar = document.querySelector('#avatar');
     var welcomeMsg = document.querySelector('#welcome-msg');
     var logoutBtn = document.querySelector('#logout-link');
+    var searchForm = document.querySelector('#search-form');
 
     welcomeMsg.innerHTML = 'Welcome, ' + user_fullname;
 
@@ -63,6 +65,7 @@
     showElement(avatar);
     showElement(welcomeMsg);
     showElement(logoutBtn, 'inline-block');
+    showElement(searchForm);
     hideElement(loginForm);
 
     initGeoLocation();
@@ -75,12 +78,14 @@
     var avatar = document.querySelector('#avatar');
     var welcomeMsg = document.querySelector('#welcome-msg');
     var logoutBtn = document.querySelector('#logout-link');
+    var searchForm = document.querySelector('#search-form');
 
     hideElement(itemNav);
     hideElement(itemList);
     hideElement(avatar);
     hideElement(logoutBtn);
     hideElement(welcomeMsg);
+    hideElement(searchForm);
 
     showElement(loginForm);
   }
@@ -310,6 +315,43 @@
     );
   }
 
+    /**
+   * API Frank added Load the search items API end point: [GET]
+   * /search?user_id=1111&lat=37.38&lon=-122.08
+   */
+  function loadSearchItems() {
+    console.log('loadSearchItems');
+    activeBtn('nearby-btn');
+
+    // The request parameters
+    var term = document.querySelector('#searchContent').value;
+    var range = document.querySelector('#searchRange').value;
+    var url = './search';
+    var params = 'user_id=' + user_id + '&lat=' + lat + '&lon=' + lng +
+        '&term=' + term + '&range=' + range;
+    var data = null;
+
+    // display loading message
+    showLoadingMessage('Loading search items...');
+
+    // make AJAX call
+    ajax('GET', url + '?' + params, data,
+      // successful callback
+      function(res) {
+        var items = JSON.parse(res);
+        if (!items || items.length === 0) {
+          showWarningMessage('No search item.');
+        } else {
+          listItems(items);
+        }
+      },
+      // failed callback
+      function() {
+        showErrorMessage('Cannot load search items.');
+      }
+    );
+  }
+  
   /**
    * API #2 Load favorite (or visited) items API end point: [GET]
    * /history?user_id=1111
@@ -536,4 +578,5 @@
   init();
 
 })();
+
 

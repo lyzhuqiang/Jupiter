@@ -23,7 +23,7 @@ public class TicketMasterAPI {
 	private static final String DEFAULT_KEYWORD = ""; // no restriction
 	private static final String API_KEY = "C7AMWxzaKGDzM5aO5NQ4Moik7uAetKc4";
 	
-	public List<Item> search(double lat, double lon, String keyword) {
+	public List<Item> search(double lat, double lon, String keyword, double range) {
 		if (keyword == null) {
 			keyword = DEFAULT_KEYWORD;
 		}
@@ -34,7 +34,7 @@ public class TicketMasterAPI {
 			e.printStackTrace();
 		}
 		
-		String  query = String.format("apikey=%s&latlong=%s,%s&keyword=%s&radius=%s", API_KEY, lat, lon, keyword, 50);
+		String  query = String.format("apikey=%s&latlong=%s,%s&keyword=%s&radius=%s", API_KEY, lat, lon, keyword, (int)range);
 		String url = URL + "?" + query;
 		
 		try {
@@ -68,6 +68,10 @@ public class TicketMasterAPI {
 		}
 		return new ArrayList<>();
 
+	}
+	
+	public List<Item> search(double lat, double lon, String keyword) {
+		return search(lat, lon, keyword, 50);
 	}
 	
 	private List<Item> getItemList(JSONArray events) throws JSONException {

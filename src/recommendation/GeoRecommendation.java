@@ -36,7 +36,7 @@ public class GeoRecommendation {
 		});
 		Set<String> visitedId = new HashSet<>();
 		for(Entry<String, Integer> categoryEntry : categoryList) {
-			List<Item> itemList = connection.searchItems(lat, lon, categoryEntry.getKey());
+			List<Item> itemList = connection.searchItems(lat, lon, categoryEntry.getKey(), 50);
 			for(Item item : itemList) {
 				if(visitedId.add(item.getItemId()) && !favoriteItemIds.contains(item.getItemId())) {
 					recommendedItems.add(item);

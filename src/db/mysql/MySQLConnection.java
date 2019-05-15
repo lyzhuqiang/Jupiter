@@ -168,9 +168,9 @@ public class MySQLConnection implements DBConnection {
 	}
 
 	@Override
-	public List<Item> searchItems(double lat, double lon, String term) {
+	public List<Item> searchItems(double lat, double lon, String term, double range) {
 		TicketMasterAPI tmAPI = new TicketMasterAPI();
-		List<Item> items = tmAPI.search(lat, lon, term);
+		List<Item> items = tmAPI.search(lat, lon, term, range);
 		for (Item item : items) {
 			saveItem(item);
 		}

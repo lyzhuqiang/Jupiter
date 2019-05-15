@@ -70,10 +70,14 @@ public class SearchItem extends HttpServlet {
 
 		double lat = Double.parseDouble(request.getParameter("lat"));
 		double lon = Double.parseDouble(request.getParameter("lon"));
+		double range = 50;
+		if(request.getParameter("range") != null) {
+			range = Double.parseDouble(request.getParameter("range"));
+		}
 		String term = request.getParameter("term");
 		DBConnection connection = DBConnectionFactory.getConnection();
 		try {
-		       List<Item> items = connection.searchItems(lat, lon, term);
+		       List<Item> items = connection.searchItems(lat, lon, term, range);
 		       Set<String> favoritedItemIds = connection.getFavoriteItemIds(userId);
 		      JSONArray array = new JSONArray();
 		      for (Item item : items) {

@@ -112,7 +112,7 @@ public class MongoDBConnection implements DBConnection {
 	}
 
 	@Override
-	public List<Item> searchItems(double lat, double lon, String term) {
+	public List<Item> searchItems(double lat, double lon, String term, double range) {
 		TicketMasterAPI tmAPI = new TicketMasterAPI();
 		List<Item> items = tmAPI.search(lat, lon, term);
 		for (Item item : items) {
@@ -121,7 +121,10 @@ public class MongoDBConnection implements DBConnection {
 		return items;
 		
 	}
-
+	public List<Item> searchItems(double lat, double lon, String term) {
+		return searchItems(lat, lon, term, 50);
+	}
+	
 	@Override
 	public void saveItem(Item item) {
 		FindIterable<Document> iterable = db.getCollection("items").find(eq("item_id", item.getItemId()));

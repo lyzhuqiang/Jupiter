@@ -167,7 +167,7 @@ ul {
 	margin: 0px auto;
 	overflow: auto;
 	padding: 40px;
-	width: 300px;
+	width: 350px;
 }
 
 #login-form label {
@@ -182,14 +182,64 @@ ul {
 	width: 100%;
 }
 
-#login-form button {
+#login-form #login-btn {
 	cursor: pointer;
 	float: right;
 	padding: 8px 20px;
 	text-align: right;
 }
 
+#login-form #register-jump-btn {
+	cursor: pointer;
+	float: left;
+	padding: 8px 20px;
+	text-align: left;
+}
+
 #login-error {
+	clear: both;
+	color: #990000;
+	padding-top: 10px;
+}
+
+/**
+ * register form
+ */
+#register-form {
+	color: #624630;
+	margin: 0px auto;
+	overflow: auto;
+	padding: 40px;
+	width: 350px;
+}
+
+#register-form label {
+	display: block;
+}
+
+#register-form input {
+	border: none;
+	display: block;
+	margin-bottom: 10px;
+	padding: 8px;
+	width: 100%;
+}
+
+#register-form #login-jump-btn {
+	cursor: pointer;
+	float: left;
+	padding: 8px 20px;
+	text-align: left;
+}
+
+#register-form #register-btn {
+	cursor: pointer;
+	float: right;
+	padding: 8px 20px;
+	text-align: right;
+}
+
+#register-result {
 	clear: both;
 	color: #990000;
 	padding-top: 10px;

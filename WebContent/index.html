@@ -2,7 +2,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Item Recommendation">
-  <meta name="author" content="Your Name">
+  <meta name="author" content="Frank Zhu">
   <title>Item Recommendation Final</title>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -23,8 +23,8 @@
   <div class="container">
     <header>
       <p>
-        <span>Event</span>
-        <br /> Recommendation!
+        <span>My</span>
+        <br /> Event
       </p>
       <div id="search-form">
         <label for="searchContent">What:</label>
@@ -41,8 +41,22 @@
         <input id="username" name="username" type="text">
         <label for="password">Password:</label>
         <input id="password" name="password" type="password">
+        <button id="register-jump-btn">New user? Register</button>
         <button id="login-btn">Login</button>
         <p id="login-error"></p>
+      </div>
+      <div id="register-form">
+        <label for="usernameReg">Username:*</label>
+        <input id="usernameReg" name="usernameReg" type="text">
+        <label for="passwordReg">Password:*</label>
+        <input id="passwordReg" name="passwordReg" type="password">
+        <label for="firstname">First Name:*</label>
+        <input id="firstname" name="firstname" type="text">
+        <label for="lastname">Last Name:*</label>
+        <input id="lastname" name="lastname" type="text">
+        <button id="login-jump-btn">Back to login</button>
+        <button id="register-btn">Register</button>
+        <p id="register-result"></p>
       </div>
 
       <aside id="item-nav">
@@ -89,11 +103,11 @@
     <ul>
       <li>
         <p><i class="fa fa-map-o fa-2x"></i></p>
-        <p>LaiOffer office, CA</p>
+        <p>San Jose, CA</p>
       </li>
       <li>
         <p><i class="fa fa-envelope-o fa-2x"></i></p>
-        <p>info@laioffer.com</p>
+        <p>lyzhuqiang@gmail.com</p>
       </li>
       <li>
         <p><i class="fa fa-phone fa-2x"></i></p>

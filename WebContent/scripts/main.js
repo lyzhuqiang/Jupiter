@@ -14,6 +14,9 @@
   function init() {
     // register event listeners
     document.querySelector('#login-btn').addEventListener('click', login);
+    document.querySelector('#register-btn').addEventListener('click', register);
+    document.querySelector('#login-jump-btn').addEventListener('click', loginJump);
+    document.querySelector('#register-jump-btn').addEventListener('click', registerJump);
     document.querySelector('#nearby-btn').addEventListener('click', loadNearbyItems);
     document.querySelector('#fav-btn').addEventListener('click', loadFavoriteItems);
     document.querySelector('#recommend-btn').addEventListener('click', loadRecommendedItems);
@@ -51,6 +54,7 @@
     user_fullname = result.name;
 
     var loginForm = document.querySelector('#login-form');
+    var registerForm = document.querySelector('#register-form');
     var itemNav = document.querySelector('#item-nav');
     var itemList = document.querySelector('#item-list');
     var avatar = document.querySelector('#avatar');
@@ -67,12 +71,13 @@
     showElement(logoutBtn, 'inline-block');
     showElement(searchForm);
     hideElement(loginForm);
-
+    hideElement(registerForm);
     initGeoLocation();
   }
 
   function onSessionInvalid() {
     var loginForm = document.querySelector('#login-form');
+    var registerForm = document.querySelector('#register-form');
     var itemNav = document.querySelector('#item-nav');
     var itemList = document.querySelector('#item-list');
     var avatar = document.querySelector('#avatar');
@@ -88,6 +93,7 @@
     hideElement(searchForm);
 
     showElement(loginForm);
+    hideElement(registerForm);
   }
 
   function hideElement(element) {
@@ -141,7 +147,89 @@
       loadNearbyItems();
     });
   }
+  // -----------------------------------
+  // Register
+  // -----------------------------------
 
+  function register() {
+    var username = document.querySelector('#usernameReg').value;
+    var password = document.querySelector('#passwordReg').value;
+    var firstname = document.querySelector('#firstname').value;
+    var lastname = document.querySelector('#lastname').value;
+    
+    if(username === "" || password === "" || firstname === "" || lastname === ""){
+      showRegisterResult('Please fill in all fields');
+      return;
+    }
+    
+    if(username.match(/^[a-z0-9_]+$/) === null){
+       showRegisterResult('Username invalid');
+      return;
+    }
+    
+    password = md5(username + md5(password));
+
+    // The request parameters
+    var url = './register';
+    var req = JSON.stringify({
+      user_id : username,
+      password : password,
+      first_name : firstname,
+      last_name : lastname
+    });
+
+    ajax('POST', url, req,
+      // successful callback
+      function(res) {
+        var result = JSON.parse(res);
+
+        // successfully logged in
+        if (result.status === 'OK') {
+          showRegisterResult('Successfully registered');
+        } else{
+          showRegisterResult('User already existed');
+        }
+      },
+
+      // error
+      function() {
+        showRegisterResult('Failed to register');
+      },
+      true);
+  }
+
+  function showRegisterResult(result) {
+    document.querySelector('#register-result').innerHTML = result;
+  }
+
+  function clearRegisterResult() {
+    document.querySelector('#register-result').innerHTML = '';
+  }
+  
+  // -----------------------------------
+  // Jump
+  // -----------------------------------
+  function loginJump(){
+    clearRegisterResult();
+    clearLoginError();
+    document.querySelector('#username').value = '';
+    document.querySelector('#password').value = '';
+    var loginForm = document.querySelector('#login-form');
+    var registerForm = document.querySelector('#register-form');
+    showElement(loginForm);
+    hideElement(registerForm);
+  }
+  
+  function registerJump(){
+    clearRegisterResult();
+    clearLoginError();
+    var loginForm = document.querySelector('#login-form');
+    var registerForm = document.querySelector('#register-form');
+    hideElement(loginForm);
+    showElement(registerForm);
+  }
+  
+  
   // -----------------------------------
   // Login
   // -----------------------------------
@@ -578,5 +666,6 @@
   init();
 
 })();
+
 
 
